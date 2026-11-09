@@ -1,11 +1,11 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'constants/api_constant.dart';
 import 'constants/api_controller.dart';
 import 'demoStudent.dart';
-
-
 
 class LoginScreenUi extends StatefulWidget {
   const LoginScreenUi({super.key});
@@ -17,45 +17,39 @@ class LoginScreenUi extends StatefulWidget {
 class _LoginScreenUiState extends State<LoginScreenUi> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  
-Future<void> login() async{
-var email = emailController.text;
-var password = passwordController.text;
- var url= Uri.parse('https://dummyjson.com/auth/login');
- var myBody = {"email": email, "password": password};
- var response = await ApiController().post(url: ApiConstant.logInApi, body: myBody);
- print(response.$1);
- print(response.$2);
- setState(() {});
 
+  Future<void> login() async {
+    var email = emailController.text;
+    var password = passwordController.text;
+    
+    var myBody = {"email": email, "password": password};
+    var response = await ApiController().post(url: ApiConstant.logInApi, body: myBody);
+    print(response.$1);
+    print(response.$2);
+    setState(() {});
 
- if (response.$1 == 200 || response.$1 == 201) {
-   print("NAVIGATE TO HOME SCREEN");
-   var loginResponse = jsonDecode(response.$2);
-   String token = loginResponse['token'];
-   print("tokien $token");
-   ApiController().saveToken(token: token);
-   ScaffoldMessenger.of(context).showSnackBar(
-     const SnackBar(
-       content: Text("Login successful"),
-       backgroundColor: Colors.blueAccent,
-     ),
+    if (response.$1 == 200 || response.$1 == 201) {
+      print("NAVIGATE TO HOME SCREEN");
+      var loginResponse = jsonDecode(response.$2);
+      String token = loginResponse['token'];
+      print("token $token");
+      ApiController().saveToken(token: token);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Login successful"),
+          backgroundColor: Colors.blueAccent,
+        ),
+      );
 
-
-   );
-
-   var route = MaterialPageRoute(builder: (_) => Demostudent());
-   Navigator.pushReplacement(context, route);
- }
-   else{
-     var loginResponse = jsonDecode(response.$2);
-     ScaffoldMessenger.of(context).showSnackBar(
-       SnackBar(content: Text(loginResponse['messege'] ?? 'Login Failed'))
-     );
- }
- }
-
-
+      var route = MaterialPageRoute(builder: (_) => Demostudent());
+      Navigator.pushReplacement(context, route);
+    } else {
+      var loginResponse = jsonDecode(response.$2);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(loginResponse['messege'] ?? 'Login Failed')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,12 +83,7 @@ var password = passwordController.text;
                 style: TextStyle(color: Colors.blueGrey),
               ),
               SizedBox(height: 20),
-              Text(
-                "Email",
-                style: TextStyle(
-                  color: Colors.blueGrey,
-                ),
-              ),
+              Text("Email", style: TextStyle(color: Colors.blueGrey)),
               TextField(
                 controller: emailController,
                 style: const TextStyle(color: Colors.blueGrey),
@@ -123,12 +112,7 @@ var password = passwordController.text;
                 ),
               ),
               SizedBox(height: 20),
-              Text(
-                "Password",
-                style: TextStyle(
-                  color: Colors.blueGrey,
-                ),
-              ),
+              Text("Password", style: TextStyle(color: Colors.blueGrey)),
               TextField(
                 controller: passwordController,
                 autofillHints: const [AutofillHints.password],
@@ -158,19 +142,20 @@ var password = passwordController.text;
                   ),
                 ),
               ),
-             SizedBox(height: 50),
+              SizedBox(height: 50),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(backgroundColor: Colors.blueAccent),
-                  onPressed: login, child: Text(
-                  "LOGIN",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blueAccent,
                   ),
-                )),
-              )
+                  onPressed: login,
+                  child: Text(
+                    "LOGIN",
+                    style: TextStyle(color: Colors.white, fontSize: 18),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

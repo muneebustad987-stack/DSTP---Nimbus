@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nimbus/constants/api_constant.dart';
+import 'package:nimbus/constants/api_controller.dart';
+import 'package:nimbus/demoStudent.dart';
 
 class Signupscreen extends StatefulWidget {
   const Signupscreen({super.key});
@@ -11,6 +16,44 @@ class Signupscreen extends StatefulWidget {
 class _SignupscreenState extends State<Signupscreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  Future<void> login() async {
+    var email = emailController.text;
+    var password = passwordController.text;
+    var name = nameController.text;
+
+    var myBody = {"email": email, "password": password, "name": name};
+    var response = await ApiController().post(
+      url: ApiConstant.registerApi,
+      body: myBody,
+    );
+    print(response.$1);
+    print(response.$2);
+    setState(() {});
+
+    if (response.$1 == 200 || response.$1 == 201) {
+      print("NAVIGATE TO HOME SCREEN");
+      var loginResponse = jsonDecode(response.$2);
+      String token = loginResponse['token'];
+      print("token $token");
+      ApiController().saveToken(token: token);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Login successful"),
+          backgroundColor: Colors.blueAccent,
+        ),
+      );
+
+      var route = MaterialPageRoute(builder: (_) => Demostudent());
+      Navigator.pushReplacement(context, route);
+    } else {
+      var loginResponse = jsonDecode(response.$2);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(loginResponse['messege'] ?? 'Login Failed')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,12 +91,15 @@ class _SignupscreenState extends State<Signupscreen> {
               style: TextStyle(color: Colors.blueGrey, fontSize: 12),
             ),
             TextField(
+              controller: nameController,
               style: const TextStyle(color: Colors.blueGrey),
               decoration: InputDecoration(
                 fillColor: Colors.white,
                 filled: true,
-                hintText: "Muneeb Sheikh",
+                hintText: "Enter Your Name",
                 hintStyle: const TextStyle(color: Colors.blueGrey),
+                prefixIcon: const Icon(Icons.email_outlined),
+                prefixIconColor: Colors.blue,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.0),
                   borderSide: const BorderSide(
@@ -68,6 +114,7 @@ class _SignupscreenState extends State<Signupscreen> {
                 border: const OutlineInputBorder(),
               ),
             ),
+
             SizedBox(height: 20),
             Text("Email", style: TextStyle(color: Colors.blueGrey)),
             TextField(
@@ -94,6 +141,7 @@ class _SignupscreenState extends State<Signupscreen> {
                 border: const OutlineInputBorder(),
               ),
             ),
+
             SizedBox(height: 20),
             Text("Password", style: TextStyle(color: Colors.blueGrey)),
             TextField(
