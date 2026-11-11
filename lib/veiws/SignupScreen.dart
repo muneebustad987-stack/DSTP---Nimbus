@@ -194,46 +194,43 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                   ),
                 ),
-                GetBuilder<AuthController>(
-                  builder: (c) {
-                    return TextField(
-                      textInputAction: TextInputAction.done,
-                      obscureText: c.isObscured,
-                      controller: passwordController,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: screenWidth * 0.038,
-                      ),
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide: const BorderSide(color: Colors.red),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide: const BorderSide(color: Colors.red),
-                        ),
-                        fillColor: Colors.black,
-                        filled: true,
-                        hintText: "------",
-                        hintStyle: TextStyle(
-                          color: Colors.blueGrey,
-                          fontSize: screenWidth * 0.038,
-                        ),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            c.isObscured
-                                ? Icons.visibility_outlined
-                                : Icons.visibility_off_outlined,
-                            color: Colors.black54,
-                            size: screenWidth * 0.05,
-                          ),
-                          onPressed: c.changeObscured,
-                        ),
-                      ),
-                    );
-                  },
-                ),
+               Obx(()=>TextField(
+                 textInputAction: TextInputAction.done,
+                 obscureText: controller.isObscured.value,
+                 controller: passwordController,
+                 style: TextStyle(
+                   color: Colors.black,
+                   fontSize: screenWidth * 0.038,
+                 ),
+                 decoration: InputDecoration(
+                   border: OutlineInputBorder(
+                     borderRadius: BorderRadius.circular(8.0),
+                     borderSide: const BorderSide(color: Colors.red),
+                   ),
+                   enabledBorder: OutlineInputBorder(
+                     borderRadius: BorderRadius.circular(8.0),
+                     borderSide: const BorderSide(color: Colors.red),
+                   ),
+                   fillColor: Colors.black,
+                   filled: true,
+                   hintText: "------",
+                   hintStyle: TextStyle(
+                     color: Colors.blueGrey,
+                     fontSize: screenWidth * 0.038,
+                   ),
+                   suffixIcon: IconButton(
+                     icon: Icon(
+                       controller.isObscured.value
+                           ? Icons.visibility_outlined
+                           : Icons.visibility_off_outlined,
+                       color: Colors.black54,
+                       size: screenWidth * 0.05,
+                     ),
+                     onPressed: controller.changeObscured,
+                   ),
+                 ),
+               ),
+               ),
                 Padding(
                   padding: EdgeInsets.only(
                     left: screenWidth * 0.02,
@@ -274,7 +271,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             );
                           }
                         },
-                        child: c.isLoading
+                        child: controller.isLoading.value
                             ? const CircularProgressIndicator(
                                 color: Colors.white,
                               )

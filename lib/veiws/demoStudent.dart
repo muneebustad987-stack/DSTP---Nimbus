@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get_x/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nimbus/constants/home_controller.dart';
 
 class Demostudent extends StatefulWidget {
   const Demostudent({super.key});
@@ -9,6 +11,8 @@ class Demostudent extends StatefulWidget {
 }
 
 class _DemostudentState extends State<Demostudent> {
+  HomeController controller = Get.put(HomeController);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,81 +77,82 @@ class _DemostudentState extends State<Demostudent> {
               ),
             ),
             SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(25),
-                    border: Border.all(color: Colors.blue),
-                  ),
-                  child: Text(
-                    "All",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 230, 226, 226),
-                    borderRadius: BorderRadius.circular(25),
-                    border: Border.all(
-                      color: Color.fromARGB(255, 230, 226, 226),
-                    ),
-                  ),
-                  child: Text(
-                    "Asia",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 230, 226, 226),
-                    borderRadius: BorderRadius.circular(25),
-                    border: Border.all(
-                      color: Color.fromARGB(255, 230, 226, 226),
-                    ),
-                  ),
-                  child: Text(
-                    "Europe",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 230, 226, 226),
-                    borderRadius: BorderRadius.circular(25),
-                    border: Border.all(
-                      color: Color.fromARGB(255, 230, 226, 226),
-                    ),
-                  ),
-                  child: Text(
-                    "Africa",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     Container(
+            //       padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+            //       decoration: BoxDecoration(
+            //         color: Colors.blue,
+            //         borderRadius: BorderRadius.circular(25),
+            //         border: Border.all(color: Colors.blue),
+            //       ),
+            //       child: Text(
+            //         "All",
+            //         style: TextStyle(
+            //           color: Colors.white,
+            //           fontSize: 15,
+            //           fontWeight: FontWeight.bold,
+            //         ),
+            //       ),
+            //     ),
+            //     Container(
+            //       padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+            //       decoration: BoxDecoration(
+            //         color: const Color.fromARGB(255, 230, 226, 226),
+            //         borderRadius: BorderRadius.circular(25),
+            //         border: Border.all(
+            //           color: Color.fromARGB(255, 230, 226, 226),
+            //         ),
+            //       ),
+            //       child: Text(
+            //         "Asia",
+            //         style: TextStyle(
+            //           color: Colors.black,
+            //           fontSize: 15,
+            //           fontWeight: FontWeight.bold,
+            //         ),
+            //       ),
+            //     ),
+            //     Container(
+            //       padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+            //       decoration: BoxDecoration(
+            //         color: const Color.fromARGB(255, 230, 226, 226),
+            //         borderRadius: BorderRadius.circular(25),
+            //         border: Border.all(
+            //           color: Color.fromARGB(255, 230, 226, 226),
+            //         ),
+            //       ),
+            //       child: Text(
+            //         "Europe",
+            //         style: TextStyle(
+            //           color: Colors.black,
+            //           fontSize: 15,
+            //           fontWeight: FontWeight.bold,
+            //         ),
+            //       ),
+            //     ),
+            //     Container(
+            //       padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+            //       decoration: BoxDecoration(
+            //         color: const Color.fromARGB(255, 230, 226, 226),
+            //         borderRadius: BorderRadius.circular(25),
+            //         border: Border.all(
+            //           color: Color.fromARGB(255, 230, 226, 226),
+            //         ),
+            //       ),
+            //       child: Text(
+            //         "Africa",
+            //         style: TextStyle(
+            //           color: Colors.black,
+            //           fontSize: 15,
+            //           fontWeight: FontWeight.bold,
+            //         ),
+            //       ),
+            //     ),
+            //   ],
+            // ),
             SizedBox(height: 20),
 
             Row(
@@ -424,31 +429,9 @@ class _DemostudentState extends State<Demostudent> {
                 ),
               ),
             ),
-            Spacer(),
-            BottomNavigationBar(
-              backgroundColor: Color.fromARGB(255, 219, 218, 218),
-              selectedItemColor: Colors.blue,
-              unselectedItemColor: Colors.grey,
-              selectedLabelStyle: TextStyle(fontSize: 20),
-              unselectedLabelStyle: TextStyle(fontSize: 18),
-              items: [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.explore),
-                  label: "Explore",
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.favorite),
-                  label: "Favorite",
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.person),
-                  label: "Profile",
-                ),
               ],
             ),
-          ],
         ),
-      ),
     );
   }
 }
