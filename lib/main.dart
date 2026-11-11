@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get_x/get.dart';
+import 'package:nimbus/constants/auth_controller.dart';
 import 'package:nimbus/veiws/loginScreen.dart';
 
 void main() {
+  Get.put(AuthController());
   runApp(const MyApp());
 }
 
