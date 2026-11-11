@@ -405,7 +405,7 @@ class _DemostudentState extends State<Demostudent> {
                 ],
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 40),
             Container(
               width: double.infinity,
               height: 40,
@@ -424,51 +424,25 @@ class _DemostudentState extends State<Demostudent> {
                 ),
               ),
             ),
-            SizedBox(height: 30),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  children: [
-                    Icon(Icons.explore, color: Colors.blueAccent, size: 22),
-                    SizedBox(height: 10),
-                    Text(
-                      "Explore",
-                      style: TextStyle(
-                        color: Colors.blueAccent,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
+            Spacer(),
+            BottomNavigationBar(
+              backgroundColor: Color.fromARGB(255, 219, 218, 218),
+              selectedItemColor: Colors.blue,
+              unselectedItemColor: Colors.grey,
+              selectedLabelStyle: TextStyle(fontSize: 20),
+              unselectedLabelStyle: TextStyle(fontSize: 18),
+              items: [
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.explore),
+                  label: "Explore",
                 ),
-                Column(
-                  children: [
-                    Icon(Icons.favorite_outlined, color: Colors.red, size: 22),
-                    SizedBox(height: 10),
-                    Text(
-                      "Favorites",
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.favorite),
+                  label: "Favorite",
                 ),
-                Column(
-                  children: [
-                    Icon(Icons.person_outline, color: Colors.black54, size: 22),
-                    SizedBox(height: 10),
-                    Text(
-                      "Profile",
-                      style: TextStyle(
-                        color: Colors.black54,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.person),
+                  label: "Profile",
                 ),
               ],
             ),
