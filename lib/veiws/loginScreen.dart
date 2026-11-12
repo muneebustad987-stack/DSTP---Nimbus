@@ -19,8 +19,8 @@ class _LogInPageState extends State<LogInPage> {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
+    var screenHeight = MediaQuery.of(context).size.height;
+    var screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       backgroundColor: Colors.white38,
@@ -97,7 +97,7 @@ class _LogInPageState extends State<LogInPage> {
                     ),
                     fillColor: Colors.white,
                     filled: true,
-                    hintText: "you@example.com",
+                    hintText: "123@example.com",
                     hintStyle: TextStyle(
                       color: Colors.black38,
                       fontSize: screenWidth * 0.038,
@@ -121,46 +121,42 @@ class _LogInPageState extends State<LogInPage> {
                     ),
                   ),
                 ),
-                GetBuilder<AuthController>(
-                  builder: (c) {
-                    return TextField(
-                      textInputAction: TextInputAction.done,
-                      obscureText: c.isObscured,
-                      controller: passwordController,
-                      style: TextStyle(
-                        color: Colors.black38,
-                        fontSize: screenWidth * 0.038,
-                      ),
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide: BorderSide(color: Colors.grey.shade300),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          borderSide: BorderSide(color: Colors.grey.shade300),
-                        ),
-                        fillColor: Colors.white,
-                        filled: true,
-                        hintText: "Enter your password",
-                        hintStyle: TextStyle(
-                          color: Colors.black12,
-                          fontSize: screenWidth * 0.038,
-                        ),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            !c.isObscured
-                                ? Icons.visibility_outlined
-                                : Icons.visibility_off_outlined,
-                            color: Colors.black38,
-                            size: screenWidth * 0.05,
-                          ),
-                          onPressed: c.changeObscured,
-                        ),
-                      ),
-                    );
-                  },
+              Obx(()=>TextField(
+                textInputAction: TextInputAction.done,
+                obscureText: controller.isObscured.value,
+                controller: passwordController,
+                style: TextStyle(
+                  color: Colors.black38,
+                  fontSize: screenWidth * 0.038,
                 ),
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(color: Colors.grey.shade300),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(color: Colors.grey.shade300),
+                  ),
+                  fillColor: Colors.white,
+                  filled: true,
+                  hintText: "Enter your password",
+                  hintStyle: TextStyle(
+                    color: Colors.black12,
+                    fontSize: screenWidth * 0.038,
+                  ),
+                  suffixIcon: IconButton(
+                    icon: Icon(controller.isObscured.value
+                        ? Icons.visibility_outlined
+                        : Icons.visibility_off_outlined,
+                      color: Colors.black38,
+                      size: screenWidth * 0.05,
+                    ),
+                    onPressed: controller.changeObscured,
+                  ),
+                ),
+              ),
+              ),
 
                 SizedBox(height: screenHeight * 0.03),
 
@@ -191,7 +187,7 @@ class _LogInPageState extends State<LogInPage> {
                             );
                           }
                         },
-                        child: c.isLoading
+                        child: controller.isLoading.value
                             ? const CircularProgressIndicator(
                                 color: Colors.white,
                               )

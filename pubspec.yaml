@@ -38,6 +38,8 @@ dependencies:
   http: ^1.6.0
   shared_preferences: ^2.5.4
   get_x: ^5.0.0
+  shimmer: ^4.0.0
+  get: ^4.7.3
 
 dev_dependencies:
   flutter_test:

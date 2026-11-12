@@ -8,12 +8,11 @@ import 'package:nimbus/veiws/loginScreen.dart';
 
 
 class AuthController extends GetxController {
-  bool isObscured = true;
-  bool isLoading = false;
+  RxBool isObscured = true.obs;
+  RxBool isLoading = false.obs;
 
   void changeObscured() {
-    isObscured = !isObscured;
-    update();
+    isObscured.value = !isObscured.value;
   }
 
   @override
@@ -28,7 +27,7 @@ class AuthController extends GetxController {
     required String emailAddress,
     required String password,
   }) async {
-    isLoading = true;
+    isLoading = true.obs;
     update();
 
     var myBody = {'email': emailAddress, 'password': password};
@@ -39,7 +38,7 @@ class AuthController extends GetxController {
     );
 
     await Future.delayed(Duration(seconds: 2));
-    isLoading = false;
+    isLoading = false.obs;
 
     if (response.$1 == 201 || response.$1 == 200) {
       var logInResponse = jsonDecode(response.$2);
@@ -59,12 +58,9 @@ class AuthController extends GetxController {
     required String email,
     required String password,
   }) async {
-    isLoading = true;
+    isLoading = true.obs;
     update();
 
-    // var name = nameController.text;
-    // var email = emailController.text;
-    // var password = passwordController.text;
 
     var myBody = {'name': name, 'email': email, 'password': password};
 
@@ -74,24 +70,15 @@ class AuthController extends GetxController {
     );
 
     await Future.delayed(Duration(seconds: 2));
-    isLoading = false;
+    isLoading = false.obs;
 
     if (response.$1 == 201 || response.$1 == 200) {
       Get.snackbar("Welcome", "Your Account Is Registered");
       Get.to(() => LogInPage());
-      //   ScaffoldMessenger.of(context)
-      //       .showSnackBar(SnackBar(content: Text("Successfully Login")));
-      //   Navigator.pushReplacement(
-      //     context,
-      //     MaterialPageRoute(builder: (context) => const LogInPage()),
-      //   );
     } else {
       var loginRespose = jsonDecode(response.$2);
       Get.snackbar("Error", '${loginRespose['message'] ?? 'Login failed'}');
 
-      //   ScaffoldMessenger.of(context).showSnackBar(
-      //     SnackBar(content: Text(loginRespose['message'] ?? 'Login failed')),
-      //   );
     }
   }
 
@@ -103,14 +90,10 @@ class AuthController extends GetxController {
     );
     if (response.$1 == 201 || response.$1 == 200) {
       Get.offAll(() => Demostudent());
-      //   var route = MaterialPageRoute(
-      //     builder: (context) => const DashboardScreen(),
-      //   );
-      //   Navigator.pushReplacement(context, route);
+
     } else {
       Get.offAll(() => LogInPage());
-      //   var route = MaterialPageRoute(builder: (context) => const LogInPage());
-      //   Navigator.pushReplacement(context, route);
+
     }
   }
 }
