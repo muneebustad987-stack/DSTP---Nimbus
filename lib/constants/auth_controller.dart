@@ -1,6 +1,6 @@
 import 'dart:convert';
+import 'package:get/get.dart';
 
-import 'package:get_x/get.dart';
 import 'package:nimbus/constants/api_constant.dart';
 import 'package:nimbus/constants/api_controller.dart';
 import 'package:nimbus/veiws/demoStudent.dart';

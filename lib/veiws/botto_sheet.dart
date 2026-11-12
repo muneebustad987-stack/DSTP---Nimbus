@@ -11,7 +11,6 @@ class BottomSheet extends StatefulWidget {
 
 class _BottomSheetState extends State<BottomSheet> {
   List<Widget> myScreen = [Demostudent()];
-  HomeController controller = HomeController();
   int myScreenIndex = 0;
   @override
   Widget build(BuildContext context) {

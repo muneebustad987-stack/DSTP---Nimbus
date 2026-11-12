@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get_x/get.dart';
 import 'package:nimbus/constants/auth_controller.dart';
 import 'package:nimbus/veiws/loginScreen.dart';
-
+import 'package:get/get.dart';
 void main() {
   Get.put(AuthController());
   runApp(const MyApp());
@@ -13,7 +12,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),

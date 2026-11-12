@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nimbus/constants/home_controller.dart';
-import 'package:shimmer/shimmer.dart';
+
+import '../model/city.dart';
 
 
 class Demostudent extends StatefulWidget {
@@ -35,7 +37,7 @@ class _DemostudentState extends State<Demostudent> {
             Row(
               children: [
                 Text(
-                  "Demo Students",
+                  "Muneeb Sheikh",
                   style: GoogleFonts.actor(
                     color: const Color.fromARGB(255, 0, 24, 163),
                     fontSize: 30,
@@ -47,7 +49,7 @@ class _DemostudentState extends State<Demostudent> {
                   radius: 30,
                   backgroundColor: Colors.blue,
                   child: Text(
-                    "DS",
+                    "MS",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 25,
@@ -81,17 +83,16 @@ class _DemostudentState extends State<Demostudent> {
             SizedBox(height: 20),
 
             Obx(() {
-                final selected = controller.selectedRegionIndex.value;
-                return controller.isRegionLoading.value
-                    ? const RegionShimmer()
-                    : SingleChildScrollView(
+                var selected = controller.selectedRegionIndex.value;
+                return
+                     SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             for (int i = 0; i < controller.regionList.length; i++)
                               GestureDetector(
-                                onTap: () => controller.changeRegion(i),
+                                onTap: () => controller.changeRegion(),
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 16,
@@ -104,7 +105,7 @@ class _DemostudentState extends State<Demostudent> {
                                   ),
                                   decoration: BoxDecoration(
                                     color: i == selected ? Colors.blueAccent : Colors.white,
-                                    borderRadius: BorderRadius.circular(99),
+                                    borderRadius: BorderRadius.circular(50),
                                     border: Border.all(
                                       color: i == selected ? Colors.blue : Colors.white12,
                                     ),
@@ -123,81 +124,6 @@ class _DemostudentState extends State<Demostudent> {
               }
               ),
 
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: [
-            //     Container(
-            //       padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-            //       decoration: BoxDecoration(
-            //         color: Colors.blue,
-            //         borderRadius: BorderRadius.circular(25),
-            //         border: Border.all(color: Colors.blue),
-            //       ),
-            //       child: Text(
-            //         "All",
-            //         style: TextStyle(
-            //           color: Colors.white,
-            //           fontSize: 15,
-            //           fontWeight: FontWeight.bold,
-            //         ),
-            //       ),
-            //     ),
-            //     Container(
-            //       padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-            //       decoration: BoxDecoration(
-            //         color: const Color.fromARGB(255, 230, 226, 226),
-            //         borderRadius: BorderRadius.circular(25),
-            //         border: Border.all(
-            //           color: Color.fromARGB(255, 230, 226, 226),
-            //         ),
-            //       ),
-            //       child: Text(
-            //         "Asia",
-            //         style: TextStyle(
-            //           color: Colors.black,
-            //           fontSize: 15,
-            //           fontWeight: FontWeight.bold,
-            //         ),
-            //       ),
-            //     ),
-            //     Container(
-            //       padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-            //       decoration: BoxDecoration(
-            //         color: const Color.fromARGB(255, 230, 226, 226),
-            //         borderRadius: BorderRadius.circular(25),
-            //         border: Border.all(
-            //           color: Color.fromARGB(255, 230, 226, 226),
-            //         ),
-            //       ),
-            //       child: Text(
-            //         "Europe",
-            //         style: TextStyle(
-            //           color: Colors.black,
-            //           fontSize: 15,
-            //           fontWeight: FontWeight.bold,
-            //         ),
-            //       ),
-            //     ),
-            //     Container(
-            //       padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-            //       decoration: BoxDecoration(
-            //         color: const Color.fromARGB(255, 230, 226, 226),
-            //         borderRadius: BorderRadius.circular(25),
-            //         border: Border.all(
-            //           color: Color.fromARGB(255, 230, 226, 226),
-            //         ),
-            //       ),
-            //       child: Text(
-            //         "Africa",
-            //         style: TextStyle(
-            //           color: Colors.black,
-            //           fontSize: 15,
-            //           fontWeight: FontWeight.bold,
-            //         ),
-            //       ),
-            //     ),
-            //   ],
-            // ),
             SizedBox(height: 20),
 
             Row(
@@ -217,244 +143,257 @@ class _DemostudentState extends State<Demostudent> {
                 ),
               ],
             ),
+
+
             SizedBox(height: 10),
 
-            Container(
-              margin: EdgeInsets.only(bottom: 10.0),
-              padding: EdgeInsets.all(10.0),
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 214, 210, 210),
-                borderRadius: BorderRadius.circular(14),
-                boxShadow: [BoxShadow(color: Colors.white24)],
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
+
+            Expanded(
+              child: ListView.builder(
+                itemCount:controller.regionList.length,
+                  itemBuilder: (context,index){
+                  City city = controller.cities[index];
+                  return
+                Container(
+                  margin: EdgeInsets.only(bottom: 10.0),
+                  padding: EdgeInsets.all(10.0),
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 214, 210, 210),
+                    borderRadius: BorderRadius.circular(14),
+                    boxShadow: [BoxShadow(color: Colors.white24)],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        height: 35,
-                        width: 40,
-                        decoration: BoxDecoration(
-                          color: Colors.white70,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Icon(
-                          Icons.cloudy_snowing,
-                          color: Colors.blue,
-                          size: 28,
-                        ),
-                      ),
-                      SizedBox(width: 20),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      Row(
                         children: [
+                          Container(
+                            height: 35,
+                            width: 40,
+                            decoration: BoxDecoration(
+                              color: Colors.white70,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Icon(
+                              Icons.cloudy_snowing,
+                              color: Colors.blue,
+                              size: 28,
+                            ),
+                          ),
+                          SizedBox(width: 20),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                city.name!,
+                                style: TextStyle(
+                                  color: Colors.black87,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 6),
+                              Text(
+                                city.country!,
+                                style: TextStyle(color: Colors.blueGrey),
+                              ),
+                            ],
+                          ),
+                          SizedBox(width: 70),
                           Text(
-                            "Aukland",
+                            city.weather!.temperatureC!.toStringAsFixed(0),
                             style: TextStyle(
                               color: Colors.black87,
-                              fontSize: 18,
+                              fontSize: 30,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          SizedBox(height: 6),
-                          Text(
-                            "New Zeland . Oceania",
-                            style: TextStyle(color: Colors.blueGrey),
-                          ),
                         ],
-                      ),
-                      SizedBox(width: 70),
-                      Text(
-                        "15°",
-                        style: TextStyle(
-                          color: Colors.black87,
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                        ),
                       ),
                     ],
                   ),
-                ],
+                );
+              }
               ),
             ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10.0),
-              padding: EdgeInsets.all(10.0),
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 214, 210, 210),
-                borderRadius: BorderRadius.circular(14),
-                boxShadow: [BoxShadow(color: Colors.white24)],
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        height: 35,
-                        width: 40,
-                        decoration: BoxDecoration(
-                          color: Colors.white70,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Icon(
-                          Icons.wb_sunny_outlined,
-                          color: Colors.blue,
-                          size: 28,
-                        ),
-                      ),
-                      SizedBox(width: 20),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Bangkok",
-                            style: TextStyle(
-                              color: Colors.black87,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 6),
-                          Text(
-                            "Thailand . Asia",
-                            style: TextStyle(color: Colors.blueGrey),
-                          ),
-                        ],
-                      ),
-                      SizedBox(width: 130),
-                      Text(
-                        "33°",
-                        style: TextStyle(
-                          color: Colors.black87,
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10.0),
-              padding: EdgeInsets.all(10.0),
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 214, 210, 210),
-                borderRadius: BorderRadius.circular(14),
-                boxShadow: [BoxShadow(color: Colors.white24)],
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        height: 35,
-                        width: 40,
-                        decoration: BoxDecoration(
-                          color: Colors.white70,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Icon(
-                          Icons.wb_sunny_outlined,
-                          color: Colors.blue,
-                          size: 28,
-                        ),
-                      ),
-                      SizedBox(width: 20),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Buenson Aires",
-                            style: TextStyle(
-                              color: Colors.black87,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 6),
-                          Text(
-                            "Argentina . South America",
-                            style: TextStyle(color: Colors.blueGrey),
-                          ),
-                        ],
-                      ),
-                      SizedBox(width: 60),
-                      Text(
-                        "19°",
-                        style: TextStyle(
-                          color: Colors.black87,
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10.0),
-              padding: EdgeInsets.all(10.0),
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 214, 210, 210),
-                borderRadius: BorderRadius.circular(14),
-                boxShadow: [BoxShadow(color: Colors.white24)],
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        height: 35,
-                        width: 40,
-                        decoration: BoxDecoration(
-                          color: Colors.white70,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Icon(
-                          Icons.wb_sunny_outlined,
-                          color: Colors.blue,
-                          size: 28,
-                        ),
-                      ),
-                      SizedBox(width: 20),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Cairo",
-                            style: TextStyle(
-                              color: Colors.black87,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 6),
-                          Text(
-                            "Egypt . Africa",
-                            style: TextStyle(color: Colors.blueGrey),
-                          ),
-                        ],
-                      ),
-                      SizedBox(width: 140),
-                      Text(
-                        "27°",
-                        style: TextStyle(
-                          color: Colors.black87,
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+
+            // Container(
+            //   margin: EdgeInsets.only(bottom: 10.0),
+            //   padding: EdgeInsets.all(10.0),
+            //   decoration: BoxDecoration(
+            //     color: const Color.fromARGB(255, 214, 210, 210),
+            //     borderRadius: BorderRadius.circular(14),
+            //     boxShadow: [BoxShadow(color: Colors.white24)],
+            //   ),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       Row(
+            //         children: [
+            //           Container(
+            //             height: 35,
+            //             width: 40,
+            //             decoration: BoxDecoration(
+            //               color: Colors.white70,
+            //               borderRadius: BorderRadius.circular(12),
+            //             ),
+            //             child: Icon(
+            //               Icons.wb_sunny_outlined,
+            //               color: Colors.blue,
+            //               size: 28,
+            //             ),
+            //           ),
+            //           SizedBox(width: 20),
+            //           Column(
+            //             crossAxisAlignment: CrossAxisAlignment.start,
+            //             children: [
+            //               Text(
+            //                 "Bangkok",
+            //                 style: TextStyle(
+            //                   color: Colors.black87,
+            //                   fontSize: 18,
+            //                   fontWeight: FontWeight.bold,
+            //                 ),
+            //               ),
+            //               SizedBox(height: 6),
+            //               Text(
+            //                 "Thailand . Asia",
+            //                 style: TextStyle(color: Colors.blueGrey),
+            //               ),
+            //             ],
+            //           ),
+            //           SizedBox(width: 130),
+            //           Text(
+            //             "33°",
+            //             style: TextStyle(
+            //               color: Colors.black87,
+            //               fontSize: 30,
+            //               fontWeight: FontWeight.bold,
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // Container(
+            //   margin: EdgeInsets.only(bottom: 10.0),
+            //   padding: EdgeInsets.all(10.0),
+            //   decoration: BoxDecoration(
+            //     color: const Color.fromARGB(255, 214, 210, 210),
+            //     borderRadius: BorderRadius.circular(14),
+            //     boxShadow: [BoxShadow(color: Colors.white24)],
+            //   ),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       Row(
+            //         children: [
+            //           Container(
+            //             height: 35,
+            //             width: 40,
+            //             decoration: BoxDecoration(
+            //               color: Colors.white70,
+            //               borderRadius: BorderRadius.circular(12),
+            //             ),
+            //             child: Icon(
+            //               Icons.wb_sunny_outlined,
+            //               color: Colors.blue,
+            //               size: 28,
+            //             ),
+            //           ),
+            //           SizedBox(width: 20),
+            //           Column(
+            //             crossAxisAlignment: CrossAxisAlignment.start,
+            //             children: [
+            //               Text(
+            //                 "Buenson Aires",
+            //                 style: TextStyle(
+            //                   color: Colors.black87,
+            //                   fontSize: 18,
+            //                   fontWeight: FontWeight.bold,
+            //                 ),
+            //               ),
+            //               SizedBox(height: 6),
+            //               Text(
+            //                 "Argentina . South America",
+            //                 style: TextStyle(color: Colors.blueGrey),
+            //               ),
+            //             ],
+            //           ),
+            //           SizedBox(width: 60),
+            //           Text(
+            //             "19°",
+            //             style: TextStyle(
+            //               color: Colors.black87,
+            //               fontSize: 30,
+            //               fontWeight: FontWeight.bold,
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // Container(
+            //   margin: EdgeInsets.only(bottom: 10.0),
+            //   padding: EdgeInsets.all(10.0),
+            //   decoration: BoxDecoration(
+            //     color: const Color.fromARGB(255, 214, 210, 210),
+            //     borderRadius: BorderRadius.circular(14),
+            //     boxShadow: [BoxShadow(color: Colors.white24)],
+            //   ),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       Row(
+            //         children: [
+            //           Container(
+            //             height: 35,
+            //             width: 40,
+            //             decoration: BoxDecoration(
+            //               color: Colors.white70,
+            //               borderRadius: BorderRadius.circular(12),
+            //             ),
+            //             child: Icon(
+            //               Icons.wb_sunny_outlined,
+            //               color: Colors.blue,
+            //               size: 28,
+            //             ),
+            //           ),
+            //           SizedBox(width: 20),
+            //           Column(
+            //             crossAxisAlignment: CrossAxisAlignment.start,
+            //             children: [
+            //               Text(
+            //                 "Cairo",
+            //                 style: TextStyle(
+            //                   color: Colors.black87,
+            //                   fontSize: 18,
+            //                   fontWeight: FontWeight.bold,
+            //                 ),
+            //               ),
+            //               SizedBox(height: 6),
+            //               Text(
+            //                 "Egypt . Africa",
+            //                 style: TextStyle(color: Colors.blueGrey),
+            //               ),
+            //             ],
+            //           ),
+            //           SizedBox(width: 140),
+            //           Text(
+            //             "27°",
+            //             style: TextStyle(
+            //               color: Colors.black87,
+            //               fontSize: 30,
+            //               fontWeight: FontWeight.bold,
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //     ],
+            //   ),
+            // ),
             SizedBox(height: 40),
             Container(
               width: double.infinity,

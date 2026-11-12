@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get_x/get.dart';
+import 'package:get/get.dart';
 import 'package:nimbus/constants/auth_controller.dart';
 import 'package:nimbus/veiws/SignupScreen.dart';
 
