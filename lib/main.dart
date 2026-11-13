@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:nimbus/constants/auth_controller.dart';
-import 'package:nimbus/veiws/loginScreen.dart';
 import 'package:get/get.dart';
+import 'package:nimbus/constants/auth_controller.dart';
+import 'package:nimbus/veiws/botto_sheet.dart';
+
+
 void main() {
   Get.put(AuthController());
   runApp(const MyApp());
@@ -15,8 +17,10 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
-      home: const LogInPage(),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      ),
+      home: const BottoSheet(),
     );
   }
 }

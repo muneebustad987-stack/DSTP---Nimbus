@@ -51,7 +51,7 @@ class HomeController extends GetxController {
  }
 
  //Cities Api
- getcities() async {
+ Future<void> getcities() async {
    isCitiesLoading = true;
    update();
 

@@ -1,40 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:nimbus/constants/home_controller.dart';
 import 'package:nimbus/veiws/demoStudent.dart';
 
-class BottomSheet extends StatefulWidget {
-  const BottomSheet({super.key});
+class BottoSheet extends StatefulWidget {
+  const BottoSheet({super.key});
 
   @override
-  State<BottomSheet> createState() => _BottomSheetState();
+  State<BottoSheet> createState() => _BottoSheetState();
 }
 
-class _BottomSheetState extends State<BottomSheet> {
-  List<Widget> myScreen = [Demostudent()];
+class _BottoSheetState extends State<BottoSheet> {
+  List<Widget> myScreenList = [Demostudent()];
+
   int myScreenIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: myScreen[myScreenIndex],
+      body: myScreenList[myScreenIndex],
+
+      backgroundColor: Colors.grey,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: myScreenIndex,
         onTap: (index) {
-          myScreenIndex = index;
-          setState(() {});
+          setState(() {
+            myScreenIndex = index;
+          });
         },
-        backgroundColor: Color.fromARGB(255, 219, 218, 218),
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey,
-        selectedLabelStyle: TextStyle(fontSize: 20),
-        unselectedLabelStyle: TextStyle(fontSize: 18),
-        items: [
+        backgroundColor: Colors.white,
+        selectedItemColor: Colors.lightBlue,
+        unselectedItemColor: Colors.black54,
+        selectedLabelStyle: const TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+        ),
+        unselectedLabelStyle: const TextStyle(fontSize: 12),
+        type: BottomNavigationBarType.fixed,
+        items: const [
           BottomNavigationBarItem(icon: Icon(Icons.explore), label: "Explore"),
           BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: "Favorite",
+            icon: Icon(Icons.favorite_outline),
+            label: "Favorites",
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline),
+            label: "Profile",
+          ),
         ],
       ),
     );

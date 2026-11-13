@@ -18,7 +18,6 @@ class AuthController extends GetxController {
   @override
   void onReady() {
     screenLoader();
-    // TODO: implement onReady
     super.onReady();
   }
 

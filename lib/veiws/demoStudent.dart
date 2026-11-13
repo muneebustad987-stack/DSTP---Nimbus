@@ -6,7 +6,6 @@ import 'package:nimbus/constants/home_controller.dart';
 
 import '../model/city.dart';
 
-
 class Demostudent extends StatefulWidget {
   const Demostudent({super.key});
 
@@ -83,46 +82,48 @@ class _DemostudentState extends State<Demostudent> {
             SizedBox(height: 20),
 
             Obx(() {
-                var selected = controller.selectedRegionIndex.value;
-                return
-                     SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            for (int i = 0; i < controller.regionList.length; i++)
-                              GestureDetector(
-                                onTap: () => controller.changeRegion(),
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 16,
-                                    vertical: 9,
-                                  ),
-                                  margin: const EdgeInsets.only(
-                                    left: 15,
-                                    top: 14,
-                                    bottom: 14,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: i == selected ? Colors.blueAccent : Colors.white,
-                                    borderRadius: BorderRadius.circular(50),
-                                    border: Border.all(
-                                      color: i == selected ? Colors.blue : Colors.white12,
-                                    ),
-                                  ),
-                                  child: Text(
-                                    controller.regionList[i],
-                                    style: TextStyle(
-                                      color: i == selected ? Colors.black87 : null,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                          ],
+              var selected = controller.selectedRegionIndex.value;
+              return SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    for (int i = 0; i < controller.regionList.length; i++)
+                      GestureDetector(
+                        onTap: () => controller.changeRegion(),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 9,
+                          ),
+                          margin: const EdgeInsets.only(
+                            left: 15,
+                            top: 14,
+                            bottom: 14,
+                          ),
+                          decoration: BoxDecoration(
+                            color: i == selected
+                                ? Colors.blueAccent
+                                : Colors.white,
+                            borderRadius: BorderRadius.circular(50),
+                            border: Border.all(
+                              color: i == selected
+                                  ? Colors.blue
+                                  : Colors.white12,
+                            ),
+                          ),
+                          child: Text(
+                            controller.regionList[i],
+                            style: TextStyle(
+                              color: i == selected ? Colors.black87 : null,
+                            ),
+                          ),
                         ),
-                      );
-              }
-              ),
+                      ),
+                  ],
+                ),
+              );
+            }),
 
             SizedBox(height: 20),
 
@@ -144,256 +145,75 @@ class _DemostudentState extends State<Demostudent> {
               ],
             ),
 
-
             SizedBox(height: 10),
-
 
             Expanded(
               child: ListView.builder(
-                itemCount:controller.regionList.length,
-                  itemBuilder: (context,index){
+                itemCount: controller.regionList.length,
+                itemBuilder: (context, index) {
                   City city = controller.cities[index];
-                  return
-                Container(
-                  margin: EdgeInsets.only(bottom: 10.0),
-                  padding: EdgeInsets.all(10.0),
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 214, 210, 210),
-                    borderRadius: BorderRadius.circular(14),
-                    boxShadow: [BoxShadow(color: Colors.white24)],
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            height: 35,
-                            width: 40,
-                            decoration: BoxDecoration(
-                              color: Colors.white70,
-                              borderRadius: BorderRadius.circular(12),
+                  return Container(
+                    margin: EdgeInsets.only(bottom: 10.0),
+                    padding: EdgeInsets.all(10.0),
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 214, 210, 210),
+                      borderRadius: BorderRadius.circular(14),
+                      boxShadow: [BoxShadow(color: Colors.white24)],
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              height: 35,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                color: Colors.white70,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Icon(
+                                Icons.cloudy_snowing,
+                                color: Colors.blue,
+                                size: 28,
+                              ),
                             ),
-                            child: Icon(
-                              Icons.cloudy_snowing,
-                              color: Colors.blue,
-                              size: 28,
-                            ),
-                          ),
-                          SizedBox(width: 20),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                city.name!,
-                                style: TextStyle(
-                                  color: Colors.black87,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                            SizedBox(width: 20),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  city.name!,
+                                  style: TextStyle(
+                                    color: Colors.black87,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 6),
-                              Text(
-                                city.country!,
-                                style: TextStyle(color: Colors.blueGrey),
-                              ),
-                            ],
-                          ),
-                          SizedBox(width: 70),
-                          Text(
-                            city.weather!.temperatureC!.toStringAsFixed(0),
-                            style: TextStyle(
-                              color: Colors.black87,
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
+                                SizedBox(height: 6),
+                                Text(
+                                  city.country!,
+                                  style: TextStyle(color: Colors.blueGrey),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                );
-              }
+                            SizedBox(width: 70),
+                            Text(
+                              city.weather!.temperatureC!.toStringAsFixed(0),
+                              style: TextStyle(
+                                color: Colors.black87,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
             ),
-
-            // Container(
-            //   margin: EdgeInsets.only(bottom: 10.0),
-            //   padding: EdgeInsets.all(10.0),
-            //   decoration: BoxDecoration(
-            //     color: const Color.fromARGB(255, 214, 210, 210),
-            //     borderRadius: BorderRadius.circular(14),
-            //     boxShadow: [BoxShadow(color: Colors.white24)],
-            //   ),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       Row(
-            //         children: [
-            //           Container(
-            //             height: 35,
-            //             width: 40,
-            //             decoration: BoxDecoration(
-            //               color: Colors.white70,
-            //               borderRadius: BorderRadius.circular(12),
-            //             ),
-            //             child: Icon(
-            //               Icons.wb_sunny_outlined,
-            //               color: Colors.blue,
-            //               size: 28,
-            //             ),
-            //           ),
-            //           SizedBox(width: 20),
-            //           Column(
-            //             crossAxisAlignment: CrossAxisAlignment.start,
-            //             children: [
-            //               Text(
-            //                 "Bangkok",
-            //                 style: TextStyle(
-            //                   color: Colors.black87,
-            //                   fontSize: 18,
-            //                   fontWeight: FontWeight.bold,
-            //                 ),
-            //               ),
-            //               SizedBox(height: 6),
-            //               Text(
-            //                 "Thailand . Asia",
-            //                 style: TextStyle(color: Colors.blueGrey),
-            //               ),
-            //             ],
-            //           ),
-            //           SizedBox(width: 130),
-            //           Text(
-            //             "33°",
-            //             style: TextStyle(
-            //               color: Colors.black87,
-            //               fontSize: 30,
-            //               fontWeight: FontWeight.bold,
-            //             ),
-            //           ),
-            //         ],
-            //       ),
-            //     ],
-            //   ),
-            // ),
-            // Container(
-            //   margin: EdgeInsets.only(bottom: 10.0),
-            //   padding: EdgeInsets.all(10.0),
-            //   decoration: BoxDecoration(
-            //     color: const Color.fromARGB(255, 214, 210, 210),
-            //     borderRadius: BorderRadius.circular(14),
-            //     boxShadow: [BoxShadow(color: Colors.white24)],
-            //   ),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       Row(
-            //         children: [
-            //           Container(
-            //             height: 35,
-            //             width: 40,
-            //             decoration: BoxDecoration(
-            //               color: Colors.white70,
-            //               borderRadius: BorderRadius.circular(12),
-            //             ),
-            //             child: Icon(
-            //               Icons.wb_sunny_outlined,
-            //               color: Colors.blue,
-            //               size: 28,
-            //             ),
-            //           ),
-            //           SizedBox(width: 20),
-            //           Column(
-            //             crossAxisAlignment: CrossAxisAlignment.start,
-            //             children: [
-            //               Text(
-            //                 "Buenson Aires",
-            //                 style: TextStyle(
-            //                   color: Colors.black87,
-            //                   fontSize: 18,
-            //                   fontWeight: FontWeight.bold,
-            //                 ),
-            //               ),
-            //               SizedBox(height: 6),
-            //               Text(
-            //                 "Argentina . South America",
-            //                 style: TextStyle(color: Colors.blueGrey),
-            //               ),
-            //             ],
-            //           ),
-            //           SizedBox(width: 60),
-            //           Text(
-            //             "19°",
-            //             style: TextStyle(
-            //               color: Colors.black87,
-            //               fontSize: 30,
-            //               fontWeight: FontWeight.bold,
-            //             ),
-            //           ),
-            //         ],
-            //       ),
-            //     ],
-            //   ),
-            // ),
-            // Container(
-            //   margin: EdgeInsets.only(bottom: 10.0),
-            //   padding: EdgeInsets.all(10.0),
-            //   decoration: BoxDecoration(
-            //     color: const Color.fromARGB(255, 214, 210, 210),
-            //     borderRadius: BorderRadius.circular(14),
-            //     boxShadow: [BoxShadow(color: Colors.white24)],
-            //   ),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       Row(
-            //         children: [
-            //           Container(
-            //             height: 35,
-            //             width: 40,
-            //             decoration: BoxDecoration(
-            //               color: Colors.white70,
-            //               borderRadius: BorderRadius.circular(12),
-            //             ),
-            //             child: Icon(
-            //               Icons.wb_sunny_outlined,
-            //               color: Colors.blue,
-            //               size: 28,
-            //             ),
-            //           ),
-            //           SizedBox(width: 20),
-            //           Column(
-            //             crossAxisAlignment: CrossAxisAlignment.start,
-            //             children: [
-            //               Text(
-            //                 "Cairo",
-            //                 style: TextStyle(
-            //                   color: Colors.black87,
-            //                   fontSize: 18,
-            //                   fontWeight: FontWeight.bold,
-            //                 ),
-            //               ),
-            //               SizedBox(height: 6),
-            //               Text(
-            //                 "Egypt . Africa",
-            //                 style: TextStyle(color: Colors.blueGrey),
-            //               ),
-            //             ],
-            //           ),
-            //           SizedBox(width: 140),
-            //           Text(
-            //             "27°",
-            //             style: TextStyle(
-            //               color: Colors.black87,
-            //               fontSize: 30,
-            //               fontWeight: FontWeight.bold,
-            //             ),
-            //           ),
-            //         ],
-            //       ),
-            //     ],
-            //   ),
-            // ),
             SizedBox(height: 40),
             Container(
               width: double.infinity,
@@ -413,9 +233,9 @@ class _DemostudentState extends State<Demostudent> {
                 ),
               ),
             ),
-              ],
-            ),
+          ],
         ),
+      ),
     );
   }
 }
