@@ -36,13 +36,19 @@ class ApiController {
     }
 
     //GET
-    Future<(int, String)> get({required String url, bool isToken = false}) async {
+    Future<(int, String)> get({required String url, bool isToken = false, Map<String, String>? queryPram}) async {
         Map<String, String> myheader = {};
         if (isToken) {
             String token = await reteriveToken();
             myheader.addAll({'Authorization': 'Bearer $token'});
         }
+
+
         Uri uri = Uri.parse(url);
+        print("QUERY PARAMETER $queryPram");
+        if (queryPram != null) {
+            uri = uri.replace(queryParameters: queryPram);
+        }
         try {
             var response = await http.get(uri, headers: myheader);
             return (response.statusCode, response.body);

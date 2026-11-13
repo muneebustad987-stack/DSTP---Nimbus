@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nimbus/constants/home_controller.dart';
-
 import '../model/city.dart';
 
 class Demostudent extends StatefulWidget {
@@ -15,6 +14,7 @@ class Demostudent extends StatefulWidget {
 
 class _DemostudentState extends State<Demostudent> {
   HomeController controller = Get.put(HomeController());
+
 
   @override
   Widget build(BuildContext context) {
@@ -146,93 +146,101 @@ class _DemostudentState extends State<Demostudent> {
             ),
 
             SizedBox(height: 10),
-
-            Expanded(
-              child: ListView.builder(
-                itemCount: controller.regionList.length,
-                itemBuilder: (context, index) {
-                  City city = controller.cities[index];
-                  return Container(
-                    margin: EdgeInsets.only(bottom: 10.0),
-                    padding: EdgeInsets.all(10.0),
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 214, 210, 210),
-                      borderRadius: BorderRadius.circular(14),
-                      boxShadow: [BoxShadow(color: Colors.white24)],
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              height: 35,
-                              width: 40,
+            GetBuilder<HomeController>(
+                builder: (c) => Expanded(
+                    child: ListView.builder(
+                      itemCount: controller.cities.length + (controller.hasNext?1:0),
+                      itemBuilder: (context, index) {
+                        if (index==controller.cities.length && controller.hasNext){
+                          return GestureDetector(
+                            onTap: controller.getcities,
+                            child: Container(
+                              width: double.infinity,
+                              height: 40,
                               decoration: BoxDecoration(
-                                color: Colors.white70,
-                                borderRadius: BorderRadius.circular(12),
+                                color: const Color.fromARGB(255, 219, 218, 218),
+                                borderRadius: BorderRadius.circular(16),
                               ),
-                              child: Icon(
-                                Icons.cloudy_snowing,
-                                color: Colors.blue,
-                                size: 28,
-                              ),
-                            ),
-                            SizedBox(width: 20),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  city.name!,
+                              child: Center(
+                                child: Text(
+                                  "Load more . page 2 of 3",
                                   style: TextStyle(
-                                    color: Colors.black87,
-                                    fontSize: 18,
+                                    color: Colors.blueAccent,
                                     fontWeight: FontWeight.bold,
+                                    fontSize: 18,
                                   ),
                                 ),
-                                SizedBox(height: 6),
-                                Text(
-                                  city.country!,
-                                  style: TextStyle(color: Colors.blueGrey),
-                                ),
-                              ],
-                            ),
-                            SizedBox(width: 70),
-                            Text(
-                              city.weather!.temperatureC!.toStringAsFixed(0),
-                              style: TextStyle(
-                                color: Colors.black87,
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                          ],
-                        ),
-                      ],
+                          );
+                        }
+                        City city = controller.cities[index];
+                        return Container(
+                          margin: EdgeInsets.only(bottom: 10.0),
+                          padding: EdgeInsets.all(10.0),
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 214, 210, 210),
+                            borderRadius: BorderRadius.circular(14),
+                            boxShadow: [BoxShadow(color: Colors.white24)],
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                    height: 35,
+                                    width: 40,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white70,
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Icon(
+                                      Icons.cloudy_snowing,
+                                      color: Colors.blue,
+                                      size: 28,
+                                    ),
+                                  ),
+                                  SizedBox(width: 20),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        city.name!,
+                                        style: TextStyle(
+                                          color: Colors.black87,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      SizedBox(height: 6),
+                                      Text(
+                                        city.country!,
+                                        style: TextStyle(color: Colors.blueGrey),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(width: 70),
+                                  Text(
+                                    city.weather!.temperatureC!.toStringAsFixed(0),
+                                    style: TextStyle(
+                                      color: Colors.black87,
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
-            ),
-            SizedBox(height: 40),
-            Container(
-              width: double.infinity,
-              height: 40,
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 219, 218, 218),
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Center(
-                child: Text(
-                  "Load more . page 2 of 3",
-                  style: TextStyle(
-                    color: Colors.blueAccent,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
+                  )
                 ),
-              ),
-            ),
+
+            SizedBox(height: 40),
+
           ],
         ),
       ),

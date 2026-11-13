@@ -56,10 +56,11 @@ class HomeController extends GetxController {
    update();
 
    try{
-     var response = await ApiController ().get(url: ApiConstant.cityApi(cityPage));
+     var response = await ApiController ().get(url: ApiConstant.cityApi, queryPram: {'Page' : cityPage.toString(), 'limit' : '8'});
      if (response.$1 == 200 || response.$1 == 201) {
        final cityWeather = cityWeatherFromJson(response.$2);
        if(cityWeather.data!=null){
+         print("CITY DATA ${cityWeather.data}");
          cities.addAll(cityWeather.data!);
          hasNext=cityWeather.meta!.hasNext!;
          cityPage++;
@@ -68,7 +69,7 @@ class HomeController extends GetxController {
      }catch (e) {
        print("ERROR $e");
    }finally{
-       isCitiesLoading = true;
+       isCitiesLoading = false;
        update();
    }
    }

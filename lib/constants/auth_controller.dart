@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import 'package:nimbus/constants/api_constant.dart';
 import 'package:nimbus/constants/api_controller.dart';
+import 'package:nimbus/veiws/botto_sheet.dart';
 import 'package:nimbus/veiws/demoStudent.dart';
 import 'package:nimbus/veiws/loginScreen.dart';
 
@@ -88,7 +89,7 @@ class AuthController extends GetxController {
       isToken: true,
     );
     if (response.$1 == 201 || response.$1 == 200) {
-      Get.offAll(() => Demostudent());
+      Get.offAll(() => BottoSheet());
 
     } else {
       Get.offAll(() => LogInPage());
