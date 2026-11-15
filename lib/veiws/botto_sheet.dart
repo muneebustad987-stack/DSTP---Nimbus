@@ -1,48 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:nimbus/veiws/demoStudent.dart';
+import 'package:nimbus/veiws/favorite_screen.dart';
+import 'package:nimbus/veiws/profile_screen.dart';
+import 'home_screen.dart';
 
-class BottoSheet extends StatefulWidget {
-  const BottoSheet({super.key});
+class DashboardScreen extends StatefulWidget {
+  const DashboardScreen({super.key, required this.user});
+
+  final String user;
 
   @override
-  State<BottoSheet> createState() => _BottoSheetState();
+  State<DashboardScreen> createState() => _DashboardScreenState();
 }
 
-class _BottoSheetState extends State<BottoSheet> {
-  List<Widget> myScreenList = [Demostudent()];
+class _DashboardScreenState extends State<DashboardScreen> {
+  int currIndex = 0;
+  final List<Widget> _screens = [];
 
-  int myScreenIndex = 0;
+  @override
+  void initState() {
+    _screens.addAll([HomeScreen(user: widget.user), const FavoriteScreen(), const ProfileScreen()]);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: myScreenList[myScreenIndex],
-
-      backgroundColor: Colors.grey,
+      body: _screens[currIndex],
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: myScreenIndex,
-        onTap: (index) {
-          setState(() {
-            myScreenIndex = index;
-          });
+        currentIndex: currIndex,
+        onTap: (value) {
+          currIndex = value;
+          setState(() {});
         },
-        backgroundColor: Colors.white,
-        selectedItemColor: Colors.lightBlue,
-        unselectedItemColor: Colors.black54,
-        selectedLabelStyle: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-        ),
-        unselectedLabelStyle: const TextStyle(fontSize: 12),
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.explore), label: "Explore"),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite_outline),
-            label: "Favorites",
+        selectedItemColor: Colors.blue,
+
+        items: [
+          const BottomNavigationBarItem(
+            icon: Icon(Icons.explore_outlined),
+            label: "Explore",
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
+          const BottomNavigationBarItem(icon: Icon(Icons.favorite_border_outlined), label: "Favorites"),
+          const BottomNavigationBarItem(
+            icon: Icon(
+              Icons.person_2_outlined,
+            ),
             label: "Profile",
           ),
         ],

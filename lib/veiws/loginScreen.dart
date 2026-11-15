@@ -1,241 +1,239 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:nimbus/constants/auth_controller.dart';
 import 'package:nimbus/veiws/SignupScreen.dart';
+import '../../constants/app_colors.dart';
 
-
-class LogInPage extends StatefulWidget {
-  const LogInPage({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<LogInPage> createState() => _LogInPageState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LogInPageState extends State<LogInPage> {
-  AuthController controller = Get.find<AuthController>();
+class _LoginScreenState extends State<LoginScreen> {
+  final _emailController = TextEditingController(text: 'demo@nimbus.app');
+  final _passwordController = TextEditingController(text: 'demo1234');
 
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  AuthController authController = Get.find<AuthController>();
+
+  InputDecoration _fieldDecoration(String hint, {Widget? suffixIcon}) {
+    final border = OutlineInputBorder(
+      borderRadius: BorderRadius.circular(16),
+      borderSide: const BorderSide(color: AppColors.fieldBorderColor),
+    );
+    return InputDecoration(
+      hintText: hint,
+      hintStyle: GoogleFonts.dmSans(
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+        color: AppColors.LoginScreenFieldHint,
+      ),
+      filled: true,
+      fillColor: AppColors.SplashScreenPrimaryText,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      border: border,
+      enabledBorder: border,
+      focusedBorder: border.copyWith(
+        borderSide: BorderSide(color: AppColors.LoginScreenIconBg, width: 1.5),
+      ),
+      suffixIcon: suffixIcon,
+    );
+  }
+
+  Widget _label(String text) {
+    return Text(
+      text,
+      style: GoogleFonts.dmSans(
+        fontWeight: FontWeight.w600,
+        fontSize: 14,
+        color: AppColors.LoginScreenSecondaryText,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    var screenHeight = MediaQuery.of(context).size.height;
-    var screenWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
-      backgroundColor: Colors.white38,
+      backgroundColor: AppColors.LoginScreenBg,
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: screenWidth * 0.05,
-              vertical: screenHeight * 0.04,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: screenWidth * 0.22,
-                  height: screenWidth * 0.22,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    image: DecorationImage(
-                      image: AssetImage("sun.png"),
-                      fit: BoxFit.cover,
+        child: CustomScrollView(
+          slivers: [
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(24, 48, 24, 32),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Logo
+                    Container(
+                      width: 56,
+                      height: 56,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(18),
+                        color: AppColors.LoginScreenIconBg,
+                      ),
+                      child: Icon(
+                        Icons.wb_sunny_outlined,
+                        color: AppColors.SplashScreenPrimaryText,
+                        size: 30,
+                      ),
                     ),
-                  ),
-                ),
+                    const SizedBox(height: 28),
 
-                SizedBox(height: screenHeight * 0.025),
-                Text(
-                  "Welcome back",
-                  style: TextStyle(
-                    fontSize: screenWidth * 0.075,
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
-                Text(
-                  "Log in to see weather for the cities you care about.",
-                  style: TextStyle(
-                    fontSize: screenWidth * 0.038,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-
-                SizedBox(height: screenHeight * 0.035),
-
-                // Email
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: screenWidth * 0.02,
-                    bottom: screenHeight * 0.01,
-                  ),
-                  child: Text(
-                    "Email",
-                    style: TextStyle(
-                      fontSize: screenWidth * 0.038,
-                      fontWeight: FontWeight.w600,
+                    // Heading
+                    Text(
+                      "Welcome back",
+                      style: GoogleFonts.sora(
+                        fontWeight: FontWeight.w800,
+                        fontSize: 28,
+                        letterSpacing: -0.5,
+                        color: AppColors.LoginScreenPrimaryText,
+                      ),
                     ),
-                  ),
-                ),
-                TextField(
-                  textInputAction: TextInputAction.next,
-                  controller: emailController,
-                  keyboardType: TextInputType.emailAddress,
-                  style: TextStyle(
-                    color: Colors.black38,
-                    fontSize: screenWidth * 0.038,
-                  ),
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(color: Colors.grey.shade300),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Log in to see weather for the cities you care about.",
+                      style: GoogleFonts.dmSans(
+                        fontSize: 15,
+                        height: 1.45,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.LoginScreenSecondaryText,
+                      ),
                     ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(color: Colors.grey.shade300),
-                    ),
-                    fillColor: Colors.white,
-                    filled: true,
-                    hintText: "123@example.com",
-                    hintStyle: TextStyle(
-                      color: Colors.black38,
-                      fontSize: screenWidth * 0.038,
-                    ),
-                  ),
-                ),
+                    const SizedBox(height: 32),
 
-                SizedBox(height: screenHeight * 0.02),
-
-                // Password
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: screenWidth * 0.02,
-                    bottom: screenHeight * 0.01,
-                  ),
-                  child: Text(
-                    "Password",
-                    style: TextStyle(
-                      fontSize: screenWidth * 0.038,
-                      fontWeight: FontWeight.w600,
+                    // Email
+                    _label("Email"),
+                    const SizedBox(height: 8),
+                    TextField(
+                      controller: _emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.next,
+                      decoration: _fieldDecoration("you@example.com"),
                     ),
-                  ),
-                ),
-              Obx(()=>TextField(
-                textInputAction: TextInputAction.done,
-                obscureText: controller.isObscured.value,
-                controller: passwordController,
-                style: TextStyle(
-                  color: Colors.black38,
-                  fontSize: screenWidth * 0.038,
-                ),
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(color: Colors.grey.shade300),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide(color: Colors.grey.shade300),
-                  ),
-                  fillColor: Colors.white,
-                  filled: true,
-                  hintText: "Enter your password",
-                  hintStyle: TextStyle(
-                    color: Colors.black12,
-                    fontSize: screenWidth * 0.038,
-                  ),
-                  suffixIcon: IconButton(
-                    icon: Icon(controller.isObscured.value
-                        ? Icons.visibility_outlined
-                        : Icons.visibility_off_outlined,
-                      color: Colors.black38,
-                      size: screenWidth * 0.05,
-                    ),
-                    onPressed: controller.changeObscured,
-                  ),
-                ),
-              ),
-              ),
+                    const SizedBox(height: 18),
 
-                SizedBox(height: screenHeight * 0.03),
+                    // Password
+                    _label("Password"),
+                    const SizedBox(height: 8),
 
-                // Login Button
-                GetBuilder<AuthController>(
-                  builder: (c) {
-                    return SizedBox(
-                      width: double.infinity,
-                      height: screenHeight * 0.065,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blueAccent,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                    Obx(
+                      () => TextField(
+                        controller: _passwordController,
+                        obscureText: authController.isProtected.value,
+                        decoration: _fieldDecoration(
+                          "Enter your password",
+                          suffixIcon: IconButton(
+                            onPressed: authController.changeObscure,
+                            icon: Icon(
+                              authController.isProtected.value ? Icons.remove_red_eye_outlined : Icons.visibility_off_outlined,
+                              color: AppColors.LoginScreenSecondaryText,
+                            ),
                           ),
                         ),
-                        onPressed: () {
-                          if (emailController.text.isEmpty &&
-                              passwordController.text.isEmpty) {
-                            Get.snackbar(
-                              "Error",
-                              "Email and Password required",
-                            );
-                          } else {
-                            c.logIn(
-                              emailAddress: emailController.text,
-                              password: passwordController.text,
-                            );
-                          }
-                        },
-                        child: controller.isLoading.value
-                            ? const CircularProgressIndicator(
-                                color: Colors.white,
-                              )
-                            : Text(
-                                "Login",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: screenWidth * 0.04,
-                                  fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+                    const SizedBox(height: 32),
+
+                    // Log in button (full width)
+                    Obx(
+                      () => SizedBox(
+                        width: double.infinity,
+                        height: 54,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
+                              Get.snackbar(
+                                "Error",
+                                "Email and Password are required",
+                                colorText: Colors.red,
+                                snackPosition: SnackPosition.TOP,
+                              );
+                            } else {
+                              authController.login(email: _emailController.text, pass: _passwordController.text);
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            elevation: 0,
+                            backgroundColor: AppColors.LoginScreenIconBg,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                          ),
+                          child: authController.isLoading.value
+                              ? Row(
+                                  spacing: 12,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      width: 20,
+                                      height: 20,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                        backgroundColor: AppColors.SplashScreenPrimaryText.withValues(alpha: 0.25),
+                                        valueColor: const AlwaysStoppedAnimation<Color>(
+                                          AppColors.SplashScreenPrimaryText,
+                                        ),
+                                      ),
+                                    ),
+                                    const Text("Logging in..", style: TextStyle(color: AppColors.SplashScreenPrimaryText, fontSize: 18)),
+                                  ],
+                                )
+                              : Text(
+                                  "Log in",
+                                  style: GoogleFonts.dmSans(
+                                    color: AppColors.SplashScreenPrimaryText,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 16,
+                                  ),
                                 ),
-                              ),
-                      ),
-                    );
-                  },
-                ),
-
-                SizedBox(height: screenHeight * 0.035),
-
-                Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "New to Nimbus? ",
-                        style: TextStyle(
-                          color: Colors.black38,
-                          fontSize: screenWidth * 0.035,
                         ),
                       ),
-                      TextButton(
-                        onPressed: () {
-                          Get.to(() => SignUpPage());
-                        },
-                        child: Text(
-                          "Create account",
-                          style: TextStyle(
-                            color: Colors.blue,
-                            fontSize: screenWidth * 0.035,
-                            fontWeight: FontWeight.bold,
+                    ),
+
+                    const Spacer(),
+
+                    Center(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            "New to Nimbus? ",
+                            style: GoogleFonts.dmSans(
+                              fontSize: 15,
+                              color: AppColors.LoginScreenSecondaryText,
+                            ),
                           ),
-                        ),
+                          GestureDetector(
+                            onTap: () {
+                              Get.to(() => SignupScreen());
+                              authController.isProtected.value = true;
+                              Future.delayed(Duration(milliseconds: 300), () {
+                                _emailController.clear();
+                                _passwordController.clear();
+                              });
+                            },
+                            child: Text(
+                              "Create account",
+                              style: GoogleFonts.dmSans(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.LoginScreenIconBg,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

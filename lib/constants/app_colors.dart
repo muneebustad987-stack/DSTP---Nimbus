@@ -1,31 +1,20 @@
-import 'package:flutter/material.dart';
-
-/*class AppColors {
-  static const appBg = Color(0xffF5927);
-}*/
+import 'dart:ui';
 
 class AppColors {
-  // Backgrounds
-  static const bgColor = Color(0xFF121212);
-  static const appbarColor = Color(0xFF4B2E83);
-  static const taskCardBgColor = Color(0xFF1E1E1E);
-  static const taskCardBorderColor = Color(0xFF5C4A78);
+  static const Color SplashScreenPrimaryText = Color(0xFFFFFFFF);
+  static const Color SplashScreensSecondaryText = Color(0xFF9FB4DD);
+  static const Color SplashScreensSessionText = Color(0xFF8FB0FF);
+  static const Color SplashScreenBg = Color(0xFF0B1B3A);
 
-  // Text
-  static const primaryText = Color(0xFFFFFFFF);
-  static const secondaryText = Color(0xFFA0A0A0);
-  static const completedText = Color(0xFF666666);
+  static const Color LoginScreenBg = Color(0xFFF3F7FF);
+  static const Color LoginScreenIconBg = Color(0xFF2F6BFF);
+  static const Color LoginScreenPrimaryText = Color(0xFF0B1B3A);
+  static const Color LoginScreenSecondaryText = Color(0xFF5A6B8C);
+  static const Color LoginScreenFieldHint = Color(0xFF7C8AAB);
+  static const Color fieldBorderColor = Color(0xFFDCE6F8);
+  static const Color sideBorderColor = Color(0xFFE1E8F7);
+  static const Color weatherIconYellowColor = Color(0xFFFFF3CC);
+  static const Color weatherIconBlueColor = Color(0xFFE4ECFF);
 
-  static const fabColor = Color(0xFF9B82C6);
-  static const fabIconColor = Color(0xFFFFFFFF);
-  static const activeCheckboxColor = Color(0xFF54A595);
-  static const inactiveCheckboxBorderColor = Color(0xFFA0A0A0);
-  static const cancelIconColor = Color(0xFFFF0000);
-
-  //  Bottom Sheet
-  static const bottomSheetBgColor = Color(0xFF252525);
-  static const inputFieldBgColor = Color(0xFF1A1A1A);
-  static const inputHintTextColor = Color(0xFF757575);
-  static const primaryBtnColor = Color(0xFF9B82C6);
-  static const primaryBtnTextColor = Color(0xFFFFFFFF);
+  static const Color HomeScreenBg = Color(0xFFF3F7FF);
 }

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nimbus/constants/auth_controller.dart';
-import 'package:nimbus/veiws/botto_sheet.dart';
-
+import 'package:nimbus/veiws/splashscreen.dart';
+// import 'package:nimbus/constants/auth_controller.dart';
+// import 'package:nimbus/veiws/favorite_screen.dart';
 
 void main() {
   Get.put(AuthController());
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const BottoSheet(),
+      home: SplashScreen(),
     );
   }
 }

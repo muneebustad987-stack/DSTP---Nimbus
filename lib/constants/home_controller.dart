@@ -2,75 +2,73 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:nimbus/constants/api_constant.dart';
-import 'package:nimbus/constants/api_controller.dart';
+import 'package:nimbus/model/city.dart';
 
 import '../model/cities_weather_model.dart';
-import '../model/city.dart';
+import 'api_controller.dart';
 
 class HomeController extends GetxController {
-  RxList regionList = ["ALL"].obs;
+  RxList<dynamic> regionList = [].obs;
   RxInt selectedRegionIndex = 0.obs;
   RxBool isRegionLoading = false.obs;
 
-//weather api
+  // Cities Weather
   int cityPage = 1;
   bool hasNext = true;
   List<City> cities = [];
-  bool isCitiesLoading = true;
+  bool isCitiesLoading = false;
 
   @override
   void onInit() {
-    changeRegion();
-    getcities();
+    getRegions();
+    getCities();
     super.onInit();
   }
 
-  void regionTab (int index) {
-   selectedRegionIndex.value = index;
- }
+  void regionTap(int index) {
+    selectedRegionIndex.value = index;
+  }
 
- Future<void> changeRegion() async {
+  Future<void> getRegions() async {
     isRegionLoading.value = true;
 
     var response = await ApiController().get(url: ApiConstant.regionApi);
 
-    try{
+    try {
       if (response.$1 == 200 || response.$1 == 201) {
         var regionResponse = jsonDecode(response.$2)['data'];
-        regionList.add('ALL');
+        regionList.add("All");
         for (var i in regionResponse) {
           regionList.add(i["name"]);
         }
-        print("REGION LIST $regionList");
       } else {}
     } catch (e) {
       print("ERROR $e");
-    }finally {
+    } finally {
       isRegionLoading.value = false;
     }
- }
+  }
 
- //Cities Api
- Future<void> getcities() async {
-   isCitiesLoading = true;
-   update();
+  Future<void> getCities() async {
+    if (isCitiesLoading || !hasNext) return;
+    isCitiesLoading = true;
+    update();
 
-   try{
-     var response = await ApiController ().get(url: ApiConstant.cityApi, queryPram: {'Page' : cityPage.toString(), 'limit' : '8'});
-     if (response.$1 == 200 || response.$1 == 201) {
-       final cityWeather = cityWeatherFromJson(response.$2);
-       if(cityWeather.data!=null){
-         print("CITY DATA ${cityWeather.data}");
-         cities.addAll(cityWeather.data!);
-         hasNext=cityWeather.meta!.hasNext!;
-         cityPage++;
-       }}
-       else{}
-     }catch (e) {
-       print("ERROR $e");
-   }finally{
-       isCitiesLoading = false;
-       update();
-   }
-   }
- }
+    try {
+      var response = await ApiController().get(url: ApiConstant.cityApi, queryPram: {'page': cityPage.toString(), 'limit': '8'});
+      if (response.$1 == 200 || response.$1 == 201) {
+        final citiesWeather = cityWeatherFromJson(response.$2);
+        if (citiesWeather.data != null) {
+          cities.addAll(citiesWeather.data!);
+          hasNext = citiesWeather.meta!.hasNext!;
+          cityPage++;
+        }
+      } else {}
+    } catch (e) {
+      print("ERROR $e");
+    } finally {
+      isCitiesLoading = false;
+      update();
+    }
+  }
+}

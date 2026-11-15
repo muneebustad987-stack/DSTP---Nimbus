@@ -1,48 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nimbus/constants/auth_controller.dart';
 
+import '../../constants/app_colors.dart';
+class SplashScreen extends StatelessWidget {
+  SplashScreen({super.key});
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+  final AuthController controller = Get.find<AuthController>();
 
-  @override
-  State<SplashScreen> createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(248, 46, 0, 126),
+      backgroundColor: AppColors.SplashScreenBg,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 50),
-            CircularProgressIndicator(
-              backgroundColor: Colors.blueAccent,
-            ),
             Text(
               "Nimbus",
-              style: GoogleFonts.actor(color: Colors.white, fontSize: 50, fontWeight: FontWeight.bold),
+              style: GoogleFonts.sora(fontWeight: FontWeight.w800, fontSize: 44, color: AppColors.SplashScreenPrimaryText),
             ),
-            SizedBox(height: 10),
             Text(
               "Weather & city guide",
-              style: TextStyle(
-                color: Colors.blueAccent,
-                fontSize: 18,
-              ),
+              style: GoogleFonts.dmSans(color: AppColors.SplashScreensSecondaryText, fontSize: 16, fontWeight: FontWeight.w400),
             ),
-            SizedBox(height: 40),
+            SizedBox(
+              height: 20,
+            ),
             Text(
               "Checking your session...",
-              style: TextStyle(
-                color: Colors.blueAccent,
-                fontSize: 18,
-              ),
+              style: GoogleFonts.dmMono(fontSize: 13, fontWeight: FontWeight.w400, color: AppColors.SplashScreensSessionText),
             ),
+            const SizedBox(
+              height: 20,
+            ),
+            Obx(() {
+              if (controller.isLoading.value) {
+                // Loading State
+                return CircularProgressIndicator(
+                  strokeWidth: 4,
+                  backgroundColor: AppColors.SplashScreenPrimaryText.withValues(alpha: 0.25),
+                  valueColor: const AlwaysStoppedAnimation<Color>(
+                    AppColors.SplashScreenPrimaryText,
+                  ),
+                );
+              }
+              return const SizedBox.shrink();
+            }),
           ],
         ),
       ),
