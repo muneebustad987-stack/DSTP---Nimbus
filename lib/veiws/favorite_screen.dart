@@ -153,7 +153,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                       size: 20,
                                       color: Colors.grey,
                                     ),
-                                    SizedBox(width: 15),
+                                    SizedBox(width: 10),
                                     Text(
                                       singleConDetails.location,
                                       style: GoogleFonts.sora(

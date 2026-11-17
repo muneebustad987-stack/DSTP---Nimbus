@@ -2,70 +2,103 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:nimbus/constants/api_constant.dart';
-import 'package:nimbus/model/city.dart';
-
-import '../model/cities_weather_model.dart';
-import 'api_controller.dart';
+import 'package:nimbus/constants/api_controller.dart';
+import 'package:nimbus/constants/auth_controller.dart';
+import 'package:nimbus/model/cities_weather_model.dart';
 
 class HomeController extends GetxController {
-  RxList<dynamic> regionList = [].obs;
-  RxInt selectedRegionIndex = 0.obs;
-  RxBool isRegionLoading = false.obs;
+  final AuthController authController = Get.find<AuthController>();
 
-  // Cities Weather
-  int cityPage = 1;
-  bool hasNext = true;
-  List<City> cities = [];
-  bool isCitiesLoading = false;
-
+  RxString name = "".obs;
   @override
   void onInit() {
-    getRegions();
-    getCities();
+    name.value = "Muneeb Sheikh";
+    getRegionDetails();
+    getCitiesDetails();
     super.onInit();
   }
 
-  void regionTap(int index) {
-    selectedRegionIndex.value = index;
+  String getInitials() {
+    List<String> parts = name.value.trim().split(' ');
+
+    if (parts.length >= 2) {
+      return '${parts[0][0]}${parts[1][0]}'.toUpperCase();
+    } else if (parts.isNotEmpty && parts[0].isNotEmpty) {
+      return parts[0][0].toUpperCase();
+    }
+    return '';
   }
 
-  Future<void> getRegions() async {
+  RxList<String> categories = ["All"].obs;
+
+  RxInt selectedRegionIndex = 0.obs;
+  RxBool isRegionLoading = false.obs;
+
+  void regionTap(int index) {
+    selectedRegionIndex.value = index;
+    print(categories[selectedRegionIndex.value]);
+    getCitiesDetails(reset: true);
+  }
+
+  Future<void> getRegionDetails() async {
     isRegionLoading.value = true;
 
     var response = await ApiController().get(url: ApiConstant.regionApi);
 
     try {
-      if (response.$1 == 200 || response.$1 == 201) {
-        var regionResponse = jsonDecode(response.$2)['data'];
-        regionList.add("All");
-        for (var i in regionResponse) {
-          regionList.add(i["name"]);
+      if (response.$1 == 201 || response.$1 == 200) {
+        var regionRespone = jsonDecode(response.$2)['data'];
+        for (var i in regionRespone) {
+          categories.add(i["name"]);
         }
-      } else {}
+      }
     } catch (e) {
-      print("ERROR $e");
+      print("Error $e");
     } finally {
       isRegionLoading.value = false;
     }
   }
 
-  Future<void> getCities() async {
+  // Cities data
+  RxList<dynamic> cities = [].obs;
+  bool hasNext = true;
+  int cityPage = 1;
+  bool isCitiesLoading = false;
+
+  Future<void> getCitiesDetails({bool reset = false}) async {
+    Map<String, String> queryParams = {};
+    if (reset) {
+      cities.clear();
+      hasNext = true;
+      cityPage = 1;
+      isCitiesLoading = false;
+    }
+
+    queryParams.addAll({'page': cityPage.toString(), 'limit': '8'});
+
+    if (selectedRegionIndex.value != 0) {
+      queryParams.addAll({'region': categories[selectedRegionIndex.value]});
+    }
+
     if (isCitiesLoading || !hasNext) return;
     isCitiesLoading = true;
     update();
 
     try {
-      var response = await ApiController().get(url: ApiConstant.cityApi, queryPram: {'page': cityPage.toString(), 'limit': '8'});
-      if (response.$1 == 200 || response.$1 == 201) {
+      final cityUrl = Uri.parse(ApiConstant.cityApi)
+          .replace(queryParameters: queryParams)
+          .toString();
+      var response = await ApiController().get(url: cityUrl);
+      if (response.$1 == 201 || response.$1 == 200) {
         final citiesWeather = cityWeatherFromJson(response.$2);
         if (citiesWeather.data != null) {
           cities.addAll(citiesWeather.data!);
           hasNext = citiesWeather.meta!.hasNext!;
           cityPage++;
         }
-      } else {}
+      }
     } catch (e) {
-      print("ERROR $e");
+      print("Error $e");
     } finally {
       isCitiesLoading = false;
       update();

@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
       if (!_scrollController.hasClients) return;
       if (_scrollController.position.extentAfter < _scrollThreshold &&
           homeController.hasNext) {
-        homeController.getCities();
+        homeController.getCitiesDetails();
       }
     });
     super.initState();
@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
         color: Colors.blueGrey,
       ),
       filled: true,
-      fillColor: Colors.grey,
+      fillColor: Colors.white,
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       border: border,
       enabledBorder: border,
@@ -74,9 +74,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       Text(
                         "Good Evening",
                         style: GoogleFonts.dmSans(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.blueGrey,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
                         ),
                       ),
                       Text(
@@ -140,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             for (
                               int index = 0;
-                              index < homeController.regionList.length;
+                              index < homeController.categories.length;
                               index++
                             ) ...[
                               GestureDetector(
@@ -175,7 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ),
                                   child: Text(
-                                    homeController.regionList[index],
+                                    homeController.categories[index],
                                     style: TextStyle(
                                       color:
                                           index ==
